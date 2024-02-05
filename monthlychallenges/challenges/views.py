@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseNotFound,HttpResponseRedirect
 from django.urls import reverse
+from django.template.loader import render_to_string
 monthlychallenges={"january":"do some workout",
                    "february":"do some ketabells",
                    "march":"spring season has arrived time for some yoga",
@@ -12,7 +13,7 @@ monthlychallenges={"january":"do some workout",
                    "september":"bhai kuch kar le bhai 9 months ho gaye 1 pound bhi koose nhi kiya",
                    "october":"bhai mubarak ho adha pound loose hua",
                    "november":"bhai tarakki hai ek pound loose ho gaya",
-                   "december":"bhai bohot thand hai kya karega weight kam karke"
+                   "december":None
                    }
 # Create your views here.
 def monthly_challanges_by_num(request,month):
@@ -24,18 +25,17 @@ def monthly_challanges_by_num(request,month):
     return HttpResponseRedirect(redirect_path)
 def monthly_challanges(request,month):
     try:
-        advice=f'<h1>{monthlychallenges[month]}</h1>'
-        return HttpResponse(advice)
+        advice=monthlychallenges[month]
+        return render(request,"challenges/challenge.html",{
+            "text":advice,
+            "title":month
+        })
     except:
         return HttpResponseNotFound("<h2>This month is not supported try writting the url in the lower case or try writing the correct month</h2>")
     
 def func(request):
-    listitems=""
     months=list(monthlychallenges.keys())
-    for month in months:
-        capitalize_month=month.capitalize()
-        pathtoredirect=reverse("monthname",args=[month])
-        listitems+=f'<li><h1><a href=\"{pathtoredirect}\">{capitalize_month}</a></h1></li>'
-        response_data=f"<ul>{listitems}</ul>"
-    return HttpResponse(response_data)
+    return render(request,"challenges/base.html",{
+        "months":months
+    })
  
