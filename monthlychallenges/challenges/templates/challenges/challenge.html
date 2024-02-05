@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}} Challenge</title>
-</head>
-<body>
-    <h2>The {{title|title}} month advice is :</h2>
+{% extends "base.html" %}
+{%block page_title%}
+    {{month|title}}Challenge</title>
+{%endblock%}
+{%block content%}
+    <h2>The {{title|title}} {{month|title}} advice is :</h2>
     {%if text is not None%}
         <h1>{{ text|title}}</h1>
     {%else %}
         <h1>There is no task assigned</h1>
     {%endif%}
-</body>
-</html>
+{%endblock%}

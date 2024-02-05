@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Months</title>
-</head>
-<body>
-    <h1>All Months</h1>
+{% extends "base.html" %}
+{%block page_title%}
+All Months
+{%endblock%}
+{%block content%}
+    {%include "challenges/includes/partial.html"%}
     {% for month in months %}
         <h1><li> <a href="{% url "monthname" month %}">{{month|title}}</a></li></h1>
     {% endfor %}
-</body>
-</html>
+{%endblock%}
