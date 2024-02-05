@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse,HttpResponseNotFound,HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseNotFound,HttpResponseRedirect,Http404
 from django.urls import reverse
 from django.template.loader import render_to_string
+
 monthlychallenges={"january":"do some workout",
                    "february":"do some ketabells",
                    "march":"spring season has arrived time for some yoga",
@@ -31,8 +32,7 @@ def monthly_challanges(request,month):
             "title":month
         })
     except:
-        return HttpResponseNotFound("<h2>This month is not supported try writting the url in the lower case or try writing the correct month</h2>")
-    
+        raise Http404()    
 def func(request):
     months=list(monthlychallenges.keys())
     return render(request,"challenges/base.html",{
